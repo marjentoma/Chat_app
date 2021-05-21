@@ -24,6 +24,8 @@
                 <div class="div text-center mb-2">
                     <p><i class="fas fa-comment-medical mb-3" style='font-size:22px'>ChatPlus</i></p>
                 </div>
+                <h6><i class="fas fa-comments"></i> Room Name:</h6>
+                <p style="font-size:14px" id="room-name"></p>
                 <p style="font-size:14px;margin-left:22px;margin-top:30px;"> Active now</p>
                 <ul id="users" style="font-size:14px;">
                 </ul>
@@ -50,22 +52,23 @@
 
                 </div>
             </div>
-            
+
             <div class="chat-form-container container">
                 <div class="typing "></div>
                 <form id="chat-form" class="mb-5">
                     <input id="msg" class="form-control  p-4" type="text" placeholder="Enter Message" required
                         autocomplete="off" />
                     <button class="btn p-4" style="background-color:white;margin-bottom:300px;height:20px;"><i
-                            class="fas fa-paper-plane text-primary" style="font-size:24px; margin-right:-40px;"></i> </button>
+                            class="fas fa-paper-plane text-primary" style="font-size:24px; margin-right:-40px;"></i>
+                    </button>
                 </form>
             </div>
-    </main>
+        </main>
     </div>
 
 
 
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.1/qs.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
