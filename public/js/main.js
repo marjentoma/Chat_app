@@ -5,23 +5,29 @@ const userList = document.getElementById('users');
 let privateName = "";
 let privateUser = "";
 let private = false;
+
 // const images = document.getElementsByClassName('fa');
 // Get username and room from URL
 const { username, room } = Qs.parse(location.search, {
     ignoreQueryPrefix: true,
 });
+
 const socket = io();
+
 // Join chatroom
 socket.emit('joinRoom', { username,room });
+
 // Get room and users
 socket.on('roomUsers', ({ room, users }) => {
     outputRoomName(room);
     outputUsers(users);
 });
+
 // Message from server
 socket.on('message', (message) => {
     console.log(message);
     outputMessage(message);
+
     // Scroll down
     chatMessages.scrollTop = chatMessages.scrollHeight;
 });
@@ -30,9 +36,11 @@ socket.on('joined', (data) => {
     console.log(data);
 joined(data);
 });
+
 // Message submit
 chatForm.addEventListener('submit', (e) => {
     e.preventDefault();
+
     // Get message text
     let msg = e.target.elements.msg.value;
 
@@ -60,9 +68,8 @@ chatForm.addEventListener('submit', (e) => {
     e.target.elements.msg.value = '';
     e.target.elements.msg.focus();
 });
-// Output message to DOM
 
-
+// Output private message
 socket.on("private", function (data) {
     console.log(data.msg);
     console.log(data.private);
@@ -78,10 +85,11 @@ var users = data.user;
 });
 
 
-
+// Output the welcome message
 function joined(data){
     $('.message').append(`<p  class='welcomeMessage'>${data.text}<small><br>${data.username}</small>&nbsp;<small class='text-muted'>${data.time}</small></p`);
 }
+
     // This code is for displaying all the messages for the groupchat
 function outputMessage(message) {
     var users = message.username;
@@ -96,7 +104,7 @@ else {
 function outputRoomName(room) {
     roomName.innerText = room;
 }
-// This code is for displaying Private Message
+// This code is for displaying the active user
 function outputUsers(users) {
     userList.innerHTML = '';
     users.forEach((user) => {
@@ -116,19 +124,14 @@ document.getElementById('leave-btn').addEventListener('click', () => {
         window.location = '../index.html';
     } 
 });
-// var timeout;
-// var typing = false
 
-// function timeoutFunction() {
-//     typing = false;
-//     socket.emit("typing", false);
-// }
+// This code is for typing
 $('#msg').keyup(function() {
    var inputField = $('#msg')
      socket.emit("typing",{
         typing:inputField.val().length>0,
         username:username
-    })
+    });
    
     
 });
@@ -146,7 +149,7 @@ socket.on("stop-typing", (data)=>{
     $('.typing').html("")
     
 })
-
+// For displaying the private section div
 $("#users").on("click", ".private-user", function () {
     privateName = $(this).attr("user-name");
     privateUser = $(this).attr("user-id");
@@ -166,15 +169,13 @@ function showPrivateCard() {
         x.style.display = "block";
         $('.privateRoom').empty();
         private = true;
-        // $('#typingMes').detach('');
-        // $('.typo').detach('');
+   
 
     } else {
         x.style.display = "none";
         $('.privateRoom').empty();
         private = false;
-        // $('.roomPri').prepend(hidetype);
-        // $('.roomPri').prepend(hidetype1);
+        
     }
 }
 
